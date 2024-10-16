@@ -1,0 +1,65 @@
+Входим в Django shell  
+python manage.py shell  
+
+Импортируем необходимые модели  
+from django.contrib.auth.models import User  
+from news_portal1.models import Author, Category, Post, Comment Или from news_portal1.models import *  
+
+Создание двух пользователей  
+user1 = User.objects.create_user('user1', 'user1@example.com', 'password1')  
+user2 = User.objects.create_user('user2', 'user2@example.com', 'password2')  
+
+Создание двух авторов, связанных с пользователями  
+author1 = Author.objects.create(user=user1)  
+author2 = Author.objects.create(user=user2)  
+
+Добавление 4 категорий  
+category1 = Category.objects.create(name='Технологии')  
+category2 = Category.objects.create(name='Наука')  
+category3 = Category.objects.create(name='Здоровье')  
+category4 = Category.objects.create(name='Спорт')  
+
+Добавление 2 статей и 1 новости  
+post1 = Post.objects.create(author=author1, type_post='AR', title='Что-то про луну', content='Ранним утром 12 сентября 1959 года на космодроме Байконур ушла в полет многоступенчатая ракета-носитель «Восток-Л», на последней ступени которой находилась «вторая советская космическая ракета», как ее тогда называли в советской прессе, — автоматическая межпланетная станция (АМС) «Луна-2».')  
+post2 = Post.objects.create(author=author2, type_post='AR', title='Что-то про здоровье', content='Иммунитет человека — это способность его организма защищаться от различных «врагов», т.е. чужеродной генетической информации. С одной стороны, иммунная система защищает организм, а с другой — её состояние зависит от общего здоровья человека.')  
+news1 = Post.objects.create(author=author1, type_post='NW', title='Новость про спорт и технологии', content='Компания Computervision использует камеры в Олимпийском центре водных видов спорта, чтобы в реальном времени распознавать и анализировать движения спортсменов, вычисляя частоту гребков, расстояние, ускорение и замедление.')  
+
+Присвоение категорий (у поста 1 как минимум 2 категории)  
+post1.categories.add(category1, category2)  
+post2.categories.add(category3)  
+news1.categories.add(category1, category4)  
+
+Создание 4 комментариев к разным объектам модели Post  
+comment1 = Comment.objects.create(post=post1, user=user1, content='Отличная статья!!')  
+comment2 = Comment.objects.create(post=post1, user=user2, content='Очень информативно!')  
+comment3 = Comment.objects.create(post=post2, user=user1, content='Я все прочитал!')  
+comment4 = Comment.objects.create(post=news1, user=user2, content='Хорошая новость')  
+
+Применение функций like() и dislike() к постам и комментариям для корректировки рейтингов  
+post1.like()  
+post1.like()  
+post1.dislike()  
+post2.like()  
+news1.like()  
+comment1.like()  
+comment3.dislike()  
+
+Обновление рейтингов пользователей  
+author1.update_rating()  
+author2.update_rating()  
+
+Вывод username и рейтинга лучшего пользователя  
+top_user = Author.objects.order_by('-rating').first()  
+print(top_user.user.username, top_user.rating)  
+
+Вывод информации о лучшей статье (дата добавления, username автора, рейтинг, заголовок, превью)  
+best_post = Post.objects.order_by('-rating').first()  
+print(best_post.time_add, best_post.author.user.username, best_post.rating, best_post.title, best_post.preview())  
+
+Вывод всех комментариев к лучшей статье (дата, пользователь, рейтинг, текст)  
+comments_for_best_post = best_post.comments.all()  
+for comment in comments_for_best_post:  
+    print(comment.time_add, comment.user.username, comment.rating, comment.content)  
+
+Выход из Django shell  
+exit() Или quit()
