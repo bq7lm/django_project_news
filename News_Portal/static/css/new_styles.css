@@ -1,0 +1,18 @@
+ table {
+    width: 100%;
+    text-align: center;
+}
+.button {
+    background-color: transparent; /* Прозрачный фон */
+    border: none; /* Убираем рамку */
+    font-size: 1.5em; /* Размер шрифта */
+    color: black; /* Цвет текста */
+    cursor: pointer; /* Курсор в виде руки */
+    padding: 10px 20px; /* Отступы для кнопки */
+    transition: background-color 0.3s; /* Анимация при наведении */
+}
+.button:hover {
+    background-color: #f0f0f0; /* Цвет при наведении */
+}
+
+

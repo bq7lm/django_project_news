@@ -1,10 +1,8 @@
-{% extends 'flatpages/default.html' %}  
-
-{% load custom_filters %}  
+{% extends 'flatpages/default.html' %}
 {% load custom_tags %}
-
+{% load custom_filters %}
 {% block content %}  
-	{% if news_list %}
+	{% if news_search %}
 
 	<table>
         <tr>
@@ -14,8 +12,17 @@
             <td><button class="button">Технологии</button></td>
         </tr>
     </table>
-		
-		<hr>
+	<hr>
+	<form action="" method="get">
+	{{ filterset.form.as_p }}
+	<input type="submit" value="Найти" />
+	</form>
+		<a href="/news/search/?author=&title=&search_date="><button>Сбросить</button></a>
+	
+		{% with filterset.qs as qs %}
+        {% if filterset.form.author.value or filterset.form.title.value or filterset.form.search_date.value %}
+	
+	<hr>
            <table> 
                <tr>  
                    <td width="300"><h5>Заголовок поста </h5></td>
@@ -23,7 +30,7 @@
             <td width="350"><h5>Описание</h5></td> 
                </tr>  
 
-               {% for news in news_list %}  
+               {% for news in news_search %}  
                <tr>  
                    <td>{{ news.title|censor }}</td>  
                    <td>{{ news.time_add|date:"d.m.Y" }}</td>  
@@ -32,6 +39,12 @@
                </tr>  
                {% endfor %}  
            </table>
+		   {% else %}
+		   <h2>Начните поиск</h2>
+
+		{% endif %}
+		{% endwith %}
+		
    {% else %}  
        <h2>Новостей нет!</h2>  
    {% endif %}  

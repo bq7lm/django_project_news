@@ -3,7 +3,7 @@ from django import template
 
 register = template.Library()
 
-WORDS = ['редиска','плохой','здоровье', 'информации']
+WORDS = ['редиска','плохой','дурак']
 
 @register.filter()
 def censor(value):

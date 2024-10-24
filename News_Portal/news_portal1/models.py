@@ -16,6 +16,9 @@ class Author(models.Model):
         article_comments_ratings = sum(comment.rating for post in self.post_set.all() for comment in post.comments.all()) # суммарный рейтинг всех комментариев к статьям автора
         self.rating = post_ratings + comment_ratings + article_comments_ratings  
         self.save()
+    def __str__(self):
+        return self.full_name
+        
     
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -66,5 +69,5 @@ class Comment(models.Model):
         self.save()
     
     def dislike(self):
-        self.rating += 1
+        self.rating -= 1
         self.save()

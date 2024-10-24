@@ -1,18 +1,20 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
-{% extends 'flatpages/default.html' %} 
- 
-{% load custom_filters %} 
+{% extends 'flatpages/default.html' %}  
 
-{% block title %}
-Posts
-{% endblock title %}
- 
-<!-- В контенте на странице мы выводим все новостии/статьи -->
-{% block content %}
+{% load custom_filters %}  
 
-<h1> {{ news_detail.title|censor }}</h1>
-<p>Опубликовано {{news_detail.time_add|date:"d.m.Y" }}</p>
-{{ news_detail.content|censor }}
+{% block title %}  
+Posts  
+{% endblock title %}  
 
-
+{% block content %}  
+    <h3>{{ news_detail.title|censor }}</h3>  
+	<table>  
+		<tr>  
+			<th style="text-align: left; font-style: italic; color: gray;">Опубликовано: {{ news_detail.time_add|date:"d.m.Y" }}</th>   
+			<th style="text-align: right; font-style: italic; color: gray;">Автор: {{ news_detail.author.user.username }}</th>  
+		</tr>  
+	</table>
+    <hr>
+    <p style = 'text-align: left; margin-top: 20px;'>{{ news_detail.content|censor }}</p>  
+	<h5 align='right'>Рейтинг статьи: {{ news_detail.rating }}</h5>
 {% endblock content %}
