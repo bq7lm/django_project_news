@@ -10,7 +10,7 @@ Posts
     <h3>{{ news_detail.title|censor }}</h3>  
 	<table>  
 		<tr>  
-			<th style="text-align: left; font-style: italic; color: gray;">Опубликовано: {{ news_detail.time_add|date:"d.m.Y" }}</th>   
+			<th style="text-align: left; font-style: italic; color: gray; width: 100%;">Опубликовано: {{ news_detail.time_add|date:"d.m.Y" }}</th>   
 			<th style="text-align: right; font-style: italic; color: gray;">Автор: {{ news_detail.author.user.username }}</th>  
 		</tr>  
 	</table>

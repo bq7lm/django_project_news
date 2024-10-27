@@ -1,5 +1,5 @@
- table {
-    width: 100%;
+.table_1 {
+	width: 100%;
     text-align: center;
 }
 .button {
@@ -11,8 +11,50 @@
     padding: 10px 20px; /* Отступы для кнопки */
     transition: background-color 0.3s; /* Анимация при наведении */
 }
+
 .button:hover {
     background-color: #f0f0f0; /* Цвет при наведении */
 }
 
 
+.news_item {
+    border: 20px solid #f2f2f2; /* Серый цвет границы */
+    margin-bottom: 15px; /* Отступ между новостями */
+    padding: 10px; /* Отступ внутри границы */
+	text-align: center;
+	width: 100%;
+}
+
+
+ .submit-button1 {  
+ background-color: #808080; /* Синий цвет серый */  
+ color: white; /* Белый цвет текста */  
+ border: none; /* Убираем стандартную границу */  
+ padding:10px20px; /* Отступы внутри кнопки */  
+ border-radius:5px; /* Закругленные углы */  
+ font-size:16px; /* Размер шрифта */  
+ cursor: pointer; /* Указатель при наведении */  
+ transition: background-color0.3s ease; /* Плавный переход цвета фона */  
+ width: 21%;
+ }  
+
+ .submit-button1:hover {  
+ background-color: #C0C0C0; /* Темнее при наведении */  
+ }  
+ 
+ 
+  .submit-button2 {  
+ background-color: #808080; /* Синий цвет серый */  
+ color: white; /* Белый цвет текста */  
+ border: none; /* Убираем стандартную границу */  
+ padding:10px20px; /* Отступы внутри кнопки */  
+ border-radius:5px; /* Закругленные углы */  
+ font-size:16px; /* Размер шрифта */  
+ cursor: pointer; /* Указатель при наведении */  
+ transition: background-color0.3s ease; /* Плавный переход цвета фона */  
+ width: 30%;
+ }  
+
+ .submit-button2:hover {  
+ background-color: #C0C0C0; /* Темнее при наведении */  
+ }  

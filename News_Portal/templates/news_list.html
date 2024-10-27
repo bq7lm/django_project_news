@@ -4,9 +4,8 @@
 {% load custom_tags %}
 
 {% block content %}  
-	{% if news_list %}
-
-	<table>
+    {% if news_list %}
+    <table class="table_1">
         <tr>
             <td><button class="button">Спорт</button></td>
             <td><button class="button">Здоровье</button></td>
@@ -14,45 +13,43 @@
             <td><button class="button">Технологии</button></td>
         </tr>
     </table>
-		
-		<hr>
-           <table> 
-               <tr>  
-                   <td width="300"><h5>Заголовок поста </h5></td>
-                   <td><h5>Дата публикации</h5></td>
+    
+    <hr>
+    <table class="table_1"> 
+        <tr>  
+            <td width="300"><h5>Заголовок поста</h5></td>
+            <td><h5>Дата публикации</h5></td>
             <td width="350"><h5>Описание</h5></td> 
-               </tr>  
+        </tr>  
 
-               {% for news in news_list %}  
-               <tr>  
-                   <td>{{ news.title|censor }}</td>  
-                   <td>{{ news.time_add|date:"d.m.Y" }}</td>  
-                   <td style = "color: #808080";>{{ news.content|truncatewords:20|censor }}</td>  
-                   <td><a style= "text-decoration: none" href="{% url 'news_detail' news.pk %}">Подробнее..</a></td>  
-               </tr>  
-               {% endfor %}  
-           </table>
-   {% else %}  
-       <h2>Новостей нет!</h2>  
-   {% endif %}  
-	
-	   {% if page_obj.has_previous %}
-       {# Для каждой ссылки пагинации указываем обработку через новый тег #}
-       <a href="?{% url_replace page=1 %}">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
+        {% for news in news_list %}
+        <tr class="news_item">  
+            <td>{{ news.title|censor }}</td>  
+            <td>{{ news.time_add|date:"d.m.Y" }}</td>  
+            <td style="color: #808080;">{{ news.content|truncatewords:20|censor }}</td>  
+            <td><a style="text-decoration: none" href="{% url 'news_detail' news.pk %}">Подробнее..</a></td>  
+        </tr>  
+        {% endfor %}  
+    </table>
+    {% else %}  
+        <h2>Новостей нет!</h2>  
+    {% endif %}  
 
-   {{ page_obj.number }}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=1 %}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
 
-   {% if page_obj.has_next %}
-       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
-   
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
 {% endblock content %}

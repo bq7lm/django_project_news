@@ -2,9 +2,8 @@
 {% load custom_tags %}
 {% load custom_filters %}
 {% block content %}  
-	{% if news_search %}
 
-	<table>
+	<table class = "table_1">
         <tr>
             <td><button class="button">Спорт</button></td>
             <td><button class="button">Здоровье</button></td>
@@ -14,17 +13,29 @@
     </table>
 	<hr>
 	<form action="" method="get">
-	{{ filterset.form.as_p }}
-	<input type="submit" value="Найти" />
-	</form>
-		<a href="/news/search/?author=&title=&search_date="><button>Сбросить</button></a>
+		 <div style="text-align: left;">  
+			 <div>  
+				 <p>{{ filterset.form.title }} Название</p>  
+			 </div>  
+			 <div>  
+				 <p style='display: inline-block;'>{{ filterset.form.author }} Автор</p>  
+				 <input type="submit" class="submit-button1" value="Найти" style="margin-left:10px;" />  
+			 </div>
+			 <div>
+				<p style='display: inline-block;'>{{ filterset.form.search_date }} Дата</p>
 	
+				<a href="/news/search/?author=&title=&search_date="><input type="button" class="submit-button2" value="Сбросить" /></a>
+			 </div>
+		 </div>  
+	</form>  
+		
+	{% if news_search %}
 		{% with filterset.qs as qs %}
         {% if filterset.form.author.value or filterset.form.title.value or filterset.form.search_date.value %}
 	
 	<hr>
-           <table> 
-               <tr>  
+           <table class="table_1"> 
+               <tr class="news_item">  
                    <td width="300"><h5>Заголовок поста </h5></td>
                    <td><h5>Дата публикации</h5></td>
             <td width="350"><h5>Описание</h5></td> 
@@ -39,8 +50,7 @@
                </tr>  
                {% endfor %}  
            </table>
-		   {% else %}
-		   <h2>Начните поиск</h2>
+
 
 		{% endif %}
 		{% endwith %}
