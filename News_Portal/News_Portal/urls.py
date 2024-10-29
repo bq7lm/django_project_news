@@ -21,6 +21,9 @@ urlpatterns = [
    path('admin/', admin.site.urls),
    path('pages/', include('django.contrib.flatpages.urls')),
    # Делаем так, чтобы все адреса из нашего приложения (news_portal1/urls.py)
-   # подключались к главному приложению с префиксом products/.
+   # подключались к главному приложению с префиксом news/.
    path('news/', include('news_portal1.urls')),
+   path('', include('protect.urls')),
+   # path('upgrade/', upgrade_me, name = 'upgrade'),
+   path('accounts/', include('allauth.urls')),
 ]

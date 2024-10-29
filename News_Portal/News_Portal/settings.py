@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-t#w_gq_l_0ca=ym=wk6lt3g__!_3dpuc5+dj(yp7l5o)n9p=@%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -43,11 +43,21 @@ INSTALLED_APPS = [
     'fpages',
     'news_portal1',
     'django_filters',
+    'protect',
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,3 +145,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_FORMS = {'signup': 'protect.forms.BasicSignupForm'}
