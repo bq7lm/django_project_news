@@ -1,0 +1,61 @@
+{% extends "account/base_entrance.html" %}  
+{% load i18n %}  
+{% load allauth account %}  
+
+{% block head_title %}  
+    {% trans "Вход" %}  
+{% endblock head_title %}  
+
+{% block content %}  
+    <h1>  
+        {% trans "Вход" %}  
+    </h1>  
+
+    {% if not SOCIALACCOUNT_ONLY %}  
+        <p>  
+            {% blocktranslate %}Если у вас нет аккаунта, вы можете <a href="{{ signup_url }}">зарегистрироваться</a>.{% endblocktranslate %}  
+        </p>  
+        
+        {% url 'account_login' as login_url %}  
+        <form method="post" action="{{ login_url }}" tags="entrance,login">  
+            {% csrf_token %}  
+            <div>  
+                {% element fields form=form unlabeled=True %}  
+                {% endelement %}  
+                {{ redirect_field }}  
+            </div>  
+            <div>  
+                <button type="submit" tags="prominent,login">  
+                    {% trans "Войти" %}  
+                </button>  
+            </div>  
+        </form>  
+    {% endif %}  
+
+    {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}  
+        <hr>  
+        <div class="button-group" style="display: flex; flex-direction: column;">  
+            {% if PASSKEY_LOGIN_ENABLED %}  
+                <button type="submit" form="mfa_login" id="passkey_login" tags="prominent,login,outline,primary">  
+                    {% trans "Войти с помощью ключа доступа" %}  
+                </button>  
+            {% endif %}  
+            {% if LOGIN_BY_CODE_ENABLED %}  
+                <a href="{{ request_login_code_url }}" class="prominent login outline primary">  
+                    {% trans "Отправить код для входа на почту" %}  
+                </a>  
+            {% endif %}  
+        </div>  
+    {% endif %}  
+
+    {% if SOCIALACCOUNT_ENABLED %}  
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}  
+    {% endif %}  
+{% endblock content %}  
+
+{% block extra_body %}  
+    {{ block.super }}  
+    {% if PASSKEY_LOGIN_ENABLED %}  
+        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}  
+    {% endif %}  
+{% endblock %}
