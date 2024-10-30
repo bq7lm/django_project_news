@@ -1,11 +1,21 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
-<h1>Удаление товара</h1>
-<hr>
-<form action="" method="post">
-    {% csrf_token %}
-    <p>Удаляем "{{ object.name }}"?</p>
-    <input type="submit" value="Delete" />
-</form>
+
+<h1>Удалить новость</h1>  
+<hr>  
+
+{% if request.path == '/news/delete/' and is_authors and news_search.author.user.username == request.user.username %} 
+	
+	<form action="" method="post">  
+		{% csrf_token %}  
+		{{ form.as_p }}  
+		<input type="submit" value="Сохранить">  
+	</form>  
+	
+{% else %}
+	<h3 style='color: red'>У вас нет доступа!</h3>
+{% endif %}
+
+
 {% endblock content %}

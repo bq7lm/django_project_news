@@ -1,8 +1,11 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Author, User
 from .filters import NewsFilter
 from .forms import NewsForm
+from django.contrib.auth.models import Group
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class NewsList(ListView):
     model = Post
@@ -38,32 +41,50 @@ class SearchNews(ListView):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
         return context
-        
 
-class NewsCreate(CreateView):
+class NewsCreate(CreateView, LoginRequiredMixin):
     form_class = NewsForm
     model = Post
-    template_name = 'news_edit.html'
+    template_name = 'news_create.html'
     success_url = '/news/'
-    
-    def form_valid(self,form):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_authors'] = self.request.user.groups.filter(name='authors').exists()
+        return context
+
+    def form_valid(self, form):
         post = form.save(commit=False)
-        if self.request.path =='/articles/create/':
-            post.type_post= 'AR'
-            
+        post.author = Author.objects.get(user=self.request.user)  # Получаем экземпляр Author для текущего пользователя
+        if self.request.path == '/articles/create/':
+            post.type_post = 'AR'
         post.save()
         return super().form_valid(form)
 
 
-class NewsUpdate(UpdateView):
+
+class NewsUpdate(UpdateView, DetailView):
     form_class = NewsForm
     model = Post
+    context_object_name = 'news_search'
     template_name = 'news_edit.html'
     success_url = '/news/'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_authors'] = self.request.user.groups.filter(name = 'authors').exists()
+        return context
 
 
-class NewsDelete(DeleteView):
+
+class NewsDelete(DeleteView, DetailView):
     model = Post
+    context_object_name = 'news_search'
     template_name = 'news_delete.html'
     success_url = reverse_lazy('news_list')
     success_url = '/news/'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_authors'] = self.request.user.groups.filter(name = 'authors').exists()
+        return context

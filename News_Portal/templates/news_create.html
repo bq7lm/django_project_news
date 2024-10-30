@@ -3,7 +3,7 @@
 
 <h1>Редактор</h1>  
 <hr>  
-{% if is_authors and news_search.author.user.username == request.user.username %} 
+{% if is_authors %} 
 	
 	<form action="" method="post">  
 		{% csrf_token %}  
