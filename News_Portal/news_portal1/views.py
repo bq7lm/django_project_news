@@ -4,8 +4,7 @@ from .models import Post, Author, User
 from .filters import NewsFilter
 from .forms import NewsForm
 from django.contrib.auth.models import Group
-
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 class NewsList(ListView):
     model = Post
@@ -42,7 +41,7 @@ class SearchNews(ListView):
         context['filterset'] = self.filterset
         return context
 
-class NewsCreate(CreateView, LoginRequiredMixin):
+class NewsCreate(CreateView):
     form_class = NewsForm
     model = Post
     template_name = 'news_create.html'

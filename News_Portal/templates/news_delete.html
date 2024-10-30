@@ -5,7 +5,7 @@
 <h1>Удалить новость</h1>  
 <hr>  
 
-{% if request.path == '/news/delete/' and is_authors and news_search.author.user.username == request.user.username %} 
+{% if is_authors and news_search.author.user.username == request.user.username %} 
 	
 	<form action="" method="post">  
 		{% csrf_token %}  
