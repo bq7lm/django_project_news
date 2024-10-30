@@ -6,10 +6,27 @@
 {% if is_authors and news_search.author.user.username == request.user.username %} 
 	
 	<form action="" method="post">  
-		{% csrf_token %}  
-		{{ form.as_p }}  
-		<input type="submit" value="Сохранить">  
-	</form>  
+	{% csrf_token %}
+		 <div style="text-align: left;">  
+			 <div>  
+				 <h4>Заголовок</h4>
+				 <p>{{ form.title }}</p>  
+			 </div>  
+			 <div>  
+				 <h4>Содержание</h4>
+				 <p>{{ form.content }}</p>  
+			 </div>
+			 <div>
+				<h4>Категория</h4>
+				<p style='display: inline-block;'>{{ form.categories }}</p>
+			</div>
+		</div>  
+			<div style="text-lign: center;">
+				<input type="submit" class="submit-button1" value="Сохранить"/>
+				<a href="/news/"><input type="button" class="submit-button1" value="Отмена" /></a>
+			 </div>
+		 
+	</form>   
 
 {% else %}
 	<h3 style='color: red'>У вас нет доступа!</h3>

@@ -1,22 +1,32 @@
 {% extends "flatpages/default.html" %}
 {% csrf_token %}
 {% block content %}
-<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
-<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<table>  
+    <tr>  
+        {% if is_not_authors %}  
+            <th style="text-align: left; font-style: italic; color: gray; width: 100%; font-size: 20px;">Статус: читатель</th>  
+        {% else %}  
+            <th style="text-align: left; font-style: italic; color: gray; width: 100%; font-size: 20px;">Статус: автор</th>  
+        {% endif %}  
+        <th style="text-align: right; font-size: 20px;">{{ request.user.username }}</th>  
+    </tr>  
+	<tr>
+        <th style="text-align: center; font-style: italic; color: gray; width: 100%; font-size: 20px;">Присоеденился: {{ request.user.date_joined }}</th>
+	</tr>
+</table>  
+<hr>
 
-{% if is_not_authors %}
-<h4>Статус: Читатель</h4>
-<button> <a href="/upgrade"> Стать автором</a> </button>
-{% else %}
-<h4>Статус: Автор</h4>
-<table>
-<tr>
+    <input type="checkbox" id="menuToggle" class="menu-toggle">  
+    <label for="menuToggle" class="menu-button">Меню</label>  
+    
+    <div class="menu">  
+        <ul>  
+			<a href="/news/create"><input type="button" class="submit-button1" value="Добавить новость" /></a>
+			<a href="/news/articles/create"><input type="button" class="submit-button1" value="Добавить статью" /></a>
+			<a href="/news/search/?title=&author={{request.user.username}}&search_date="><input type="button" class="submit-button1" value="Мои публикации" /></a>
 
-<td><a href='/'>Добавить статью</a>
-<td><a href='/'>Добавить новость</a>
+			<a href="/accounts/logout"><input type="button" class="submit-button1" value="Выйти" /></a> 
+        </ul>  
+    </div> 
 
-</tr>
-</table>
-{% endif %}
-<button> <a href="accounts/logout/">Выйти</a> </button>
 {% endblock %}

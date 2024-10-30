@@ -15,14 +15,17 @@
 	<form action="" method="get">
 		 <div style="text-align: left;">  
 			 <div>  
-				 <p>{{ filterset.form.title }} Название</p>  
+				 <h4>Заголовок</h4>
+				 <p>{{ filterset.form.title }}</p>  
 			 </div>  
 			 <div>  
-				 <p style='display: inline-block;'>{{ filterset.form.author }} Автор</p>  
+				 <h4>Автор</h4>
+				 <p style='display: inline-block;'>{{ filterset.form.author }}</p>  
 				 <input type="submit" class="submit-button1" value="Найти" style="margin-left:10px;" />  
 			 </div>
 			 <div>
-				<p style='display: inline-block;'>{{ filterset.form.search_date }} Дата</p>
+				<h4>Дата</h4>
+				<p style='display: inline-block;'>{{ filterset.form.search_date }}</p>
 	
 				<a href="/news/search/?author=&title=&search_date="><input type="button" class="submit-button2" value="Сбросить" /></a>
 			 </div>

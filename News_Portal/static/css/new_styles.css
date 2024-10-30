@@ -52,9 +52,72 @@
  font-size:16px; /* Размер шрифта */  
  cursor: pointer; /* Указатель при наведении */  
  transition: background-color0.3s ease; /* Плавный переход цвета фона */  
- width: 30%;
+ width: 27%;
+ align-items: center;
  }  
 
  .submit-button2:hover {  
  background-color: #C0C0C0; /* Темнее при наведении */  
  }  
+
+
+.menu {  
+    display: none;  
+    background-color: #f0f0f0;  
+    border: 1px solid #ccc;  
+    padding: 10px;  
+    margin-top: 10px;  
+}  
+
+.menu-toggle {  
+    display: none; 
+}  
+
+.menu-button {  
+    cursor: pointer;  
+    padding: 10px;  
+    background-color: #c3b091 ;  
+    color: white;  
+    border: none;  
+    border-radius: 5px;  
+    font-size: 16px;  
+}  
+
+.menu-toggle:checked + .menu-button + .menu {  
+    display: block; 
+}  
+
+
+
+.news_item {  
+    border: 5px solid #dcdcdc; /* Серый цвет границы */  
+    background-color: #f2f2f2; /* Белый фон для новостного элемента */  
+    margin-bottom: 15px; /* Отступ между новостями */  
+    padding: 20px; /* Увеличенный отступ внутри границы для лучшего восприятия */  
+    text-align: center; /* Центрирование текста */  
+    width: 100%; /* Ширина на полную ширину родителя */  
+    border-radius: 10px; /* Закругленные углы */  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для добавления глубины */  
+    transition: transform 0.2s, box-shadow 0.2s; /* Плавный переход для эффектов */  
+    height: 200px; /* Фиксированная высота для всех новостных элементов */  
+    overflow: hidden; /* Скрыть лишнее содержимое при переполнении */  
+}  
+
+.news_item:hover {  
+    transform: translateY(-5px); /* Подъем элемента при наведении */  
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличенная тень при наведении */  
+}  
+
+.news_item h5 {  
+    margin: 10px 0; /* Отступы для заголовков */  
+    font-size: 1.2em; /* Размер шрифта заголовка */  
+    color: #333; /* Цвет текста заголовка */  
+}  
+
+.news_item p {  
+    color: #666; /* Цвет текста описания */  
+    font-size: 0.9em; /* Размер шрифта описания */  
+    line-height: 1.5; /* Межстрочный интервал для лучшей читаемости */  
+    height: 50px; /* Фиксированная высота для элемента описания */  
+    overflow: hidden; /* Скрыть лишнее содержимое при переполнении */  
+}

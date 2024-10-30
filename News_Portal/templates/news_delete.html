@@ -1,16 +1,18 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
-
-<h1>Удалить новость</h1>  
-<hr>  
+  
 
 {% if is_authors and news_search.author.user.username == request.user.username %} 
 	
 	<form action="" method="post">  
 		{% csrf_token %}  
 		{{ form.as_p }}  
-		<input type="submit" value="Сохранить">  
+		<h3>Уверены что хотите удалить?</h3>
+			<div style="text-align: center;">					
+				<input type="submit" class="submit-button1" value="Удалить" style="margin-left: 10px; display: inline;" />   
+				<a href="/news/"><input type="button" class="submit-button1" value="Отмена" style="display: inline;" /></a>  
+			</div>  
 	</form>  
 	
 {% else %}
