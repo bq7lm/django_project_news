@@ -5,10 +5,10 @@
 {% endblock head_title %}
 {% block content %}
     {% element h1 %}
-        {% trans "Sign Out" %}
+        {% trans "Выход из аккаунта" %}
     {% endelement %}
     {% element p %}
-        {% trans 'Are you sure you want to sign out?' %}
+        {% trans 'Вы уверены что хотите выйти?' %}
     {% endelement %}
     {% url 'account_logout' as action_url %}
     {% element form method="post" action=action_url no_visible_fields=True %}
@@ -17,8 +17,9 @@
             {{ redirect_field }}
         {% endslot %}
         {% slot actions %}
-            {% element button type="submit" %}
-                {% trans 'Sign Out' %}
+		<button class="submit-button1">Выйти</button>
+            <!-- {% element button type="submit" %} -->
+                <!-- {% trans 'Выйти' %} -->
             {% endelement %}
         {% endslot %}
     {% endelement %}

@@ -17,20 +17,14 @@
         {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
     {% endelement %}
     {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button tags="prominent,signup" type="submit" %}
-                    {% trans "Sign Up" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
+	<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+		{% csrf_token %}
+		{{ form.as_p }} 
+		{% if redirect_field_value %}
+			<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+			{% endif %}
+		<button class="submit-button1" type="submit">{% trans "Регистрация" %} &raquo;</button>
+	</form>
     {% endif %}
     {% if PASSKEY_SIGNUP_ENABLED %}
         {% element hr %}

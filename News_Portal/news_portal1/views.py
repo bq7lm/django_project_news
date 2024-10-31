@@ -6,6 +6,7 @@ from .forms import NewsForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
+
 class NewsList(ListView):
     model = Post
     ordering = 'title'
@@ -46,7 +47,7 @@ class NewsCreate(CreateView):
     model = Post
     template_name = 'news_create.html'
     success_url = '/news/'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_authors'] = self.request.user.groups.filter(name='authors').exists()

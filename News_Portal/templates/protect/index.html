@@ -18,7 +18,16 @@
 
     <input type="checkbox" id="menuToggle" class="menu-toggle">  
     <label for="menuToggle" class="menu-button">Меню</label>  
-    
+{% if is_not_authors %}
+
+    <div class="menu">  
+        <ul>  
+			<a href="upgrade/"><input type="button" class="submit-button1" value="Стать автором" /></a> 
+			<a href="/accounts/logout"><input type="button" class="submit-button1" value="Выйти" /></a> 
+        </ul>  
+    </div>
+
+{% else %}
     <div class="menu">  
         <ul>  
 			<a href="/news/create"><input type="button" class="submit-button1" value="Добавить новость" /></a>
@@ -28,5 +37,7 @@
 			<a href="/accounts/logout"><input type="button" class="submit-button1" value="Выйти" /></a> 
         </ul>  
     </div> 
+{% endif %}
+
 
 {% endblock %}

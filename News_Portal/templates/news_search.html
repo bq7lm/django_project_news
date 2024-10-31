@@ -3,15 +3,6 @@
 {% load custom_filters %}
 {% block content %}  
 
-	<table class = "table_1">
-        <tr>
-            <td><button class="button">Спорт</button></td>
-            <td><button class="button">Здоровье</button></td>
-            <td><button class="button">Наука</button></td>
-            <td><button class="button">Технологии</button></td>
-        </tr>
-    </table>
-	<hr>
 	<form action="" method="get">
 		 <div style="text-align: left;">  
 			 <div>  
@@ -21,12 +12,15 @@
 			 <div>  
 				 <h4>Автор</h4>
 				 <p style='display: inline-block;'>{{ filterset.form.author }}</p>  
-				 <input type="submit" class="submit-button1" value="Найти" style="margin-left:10px;" />  
+			 </div>
+			 <div>
+				<h4>Категория</h4>
+				<p style='display: inline-block;'>{{ filterset.form.categories }}</p>
 			 </div>
 			 <div>
 				<h4>Дата</h4>
 				<p style='display: inline-block;'>{{ filterset.form.search_date }}</p>
-	
+				<input type="submit" class="submit-button1" value="Найти" style="margin-left:10px;" /> 
 				<a href="/news/search/?author=&title=&search_date="><input type="button" class="submit-button2" value="Сбросить" /></a>
 			 </div>
 		 </div>  
@@ -37,22 +31,22 @@
         {% if filterset.form.author.value or filterset.form.title.value or filterset.form.search_date.value %}
 	
 	<hr>
-           <table class="table_1"> 
-               <tr class="news_item">  
-                   <td width="300"><h5>Заголовок поста </h5></td>
-                   <td><h5>Дата публикации</h5></td>
+    <table class="table_1"> 
+        <tr>  
+            <td width="300"><h5>Заголовок поста</h5></td>
+            <td><h5>Дата публикации</h5></td>
             <td width="350"><h5>Описание</h5></td> 
-               </tr>  
+        </tr>  
 
-               {% for news in news_search %}  
-               <tr>  
-                   <td>{{ news.title|censor }}</td>  
-                   <td>{{ news.time_add|date:"d.m.Y" }}</td>  
-                   <td style = "color: #808080";>{{ news.content|truncatewords:20|censor }}</td>  
-                   <td><a style= "text-decoration: none" href="{% url 'news_detail' news.pk %}">Подробнее..</a></td>  
-               </tr>  
-               {% endfor %}  
-           </table>
+        {% for news in news_search %}
+        <tr class="news_item">  
+            <td>{{ news.title|censor }}</td>  
+            <td>{{ news.time_add|date:"d.m.Y" }}</td>  
+            <td style="color: #808080;">{{ news.content|truncatewords:20|censor }}</td>  
+            <td><a style="text-decoration: none" href="{% url 'news_detail' news.pk %}">Подробнее..</a></td>  
+        </tr>  
+        {% endfor %}  
+    </table>
 
 
 		{% endif %}

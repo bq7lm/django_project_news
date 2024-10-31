@@ -8,28 +8,31 @@
 
 {% block content %}  
     <h1>  
-        {% trans "Вход" %}  
+        {% trans "Вход в аккаунт" %}  
     </h1>  
 
     {% if not SOCIALACCOUNT_ONLY %}  
-        <p>  
-            {% blocktranslate %}Если у вас нет аккаунта, вы можете <a href="{{ signup_url }}">зарегистрироваться</a>.{% endblocktranslate %}  
-        </p>  
         
         {% url 'account_login' as login_url %}  
         <form method="post" action="{{ login_url }}" tags="entrance,login">  
             {% csrf_token %}  
-            <div>  
-                {% element fields form=form unlabeled=True %}  
-                {% endelement %}  
-                {{ redirect_field }}  
+            <div>
+				<p>{{ form.login }} Почта</p>
+				<p>{{ form.password }} Пароль</p>
+				<p>Запомнить {{ form.remember}}</p> 
+                <!-- {% element fields form=form unlabeled=True %}   -->
+                <!-- {% endelement %}   -->
+                <!-- {{ redirect_field }}   -->
             </div>  
             <div>  
-                <button type="submit" tags="prominent,login">  
+                <button class="submit-button1" type="submit" tags="prominent,login">  
                     {% trans "Войти" %}  
                 </button>  
             </div>  
-        </form>  
+        </form> 
+        <p>  
+            <a class="link self-end text-sm" href="{% url 'account_reset_password' %} ">{% trans "Забыли пароль?" %}</a> Или <a href="{{ signup_url }}">зарегистрироваться.</a>  
+        </p>  		
     {% endif %}  
 
     {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}  
