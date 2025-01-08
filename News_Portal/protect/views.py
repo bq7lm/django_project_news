@@ -14,11 +14,15 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context['is_not_authors'] = not self.request.user.groups.filter(name = 'authors').exists()
         return context
 
+
 @login_required
 def upgrade_me(request):
     user = request.user
-    authors_group = Group.objects.get(name='authors')
+    authors_group, created = Group.objects.get_or_create(name='authors')
+
     if not request.user.groups.filter(name='authors').exists():
-        authors_group.user_set.add(user)
-        Author.objects.create(user=request.user)
+        authors_group.user_set.add(user)  
+        if not Author.objects.filter(user=user).exists():
+            Author.objects.create(user=user)  
+
     return redirect('/')

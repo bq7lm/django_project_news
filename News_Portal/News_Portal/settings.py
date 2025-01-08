@@ -11,16 +11,23 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv  
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# .ENV
+load_dotenv('settings.env')  
 
+secret_key = os.getenv('SECRET_KEY')
+email_host_user = os.getenv('EMAIL_HOST_USER')
+email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
+# END .ENV
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t#w_gq_l_0ca=ym=wk6lt3g__!_3dpuc5+dj(yp7l5o)n9p=@%'
+SECRET_KEY = secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'news_portal1',
     'django_filters',
     'protect',
+    'send_emails',
     
     'allauth',
     'allauth.account',
@@ -164,3 +172,14 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_FORMS = {'signup': 'protect.forms.BasicSignupForm'}
+
+# FOR EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
+EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+EMAIL_HOST_USER = email_host_user  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = email_host_password  # пароль от почты
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'
+# END FOR EMAIL
+   

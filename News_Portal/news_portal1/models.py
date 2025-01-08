@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User  
+from django.utils.translation import pgettext_lazy
+
 
 # Create your models here.
 
@@ -22,10 +24,20 @@ class Author(models.Model):
     
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    
+    subscriber = models.ManyToManyField(User, through='CategorySubscribe', related_name='categories')
+
     def __str__(self):
         return self.name.title()
-    
+
+    def get_subscribers(self):
+        return self.subscriber.all()  # Возвращает всех подписчиков для этой категории  
+
+
+class CategorySubscribe(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=pgettext_lazy('category', 'category'))
+    subscriber = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=pgettext_lazy('subscriber', 'subscriber'))
+
+
 class Post(models.Model):
     ARTICLE = 'AR'  
     NEWS = 'NW'  
@@ -49,7 +61,8 @@ class Post(models.Model):
         
     def preview(self):
         return self.content[:124] + ('...' if len(self.content) > 124 else '')  
-    
+        self.save()
+        
     def __str__(self):
         return f'{self.title}: {self.content}'
    

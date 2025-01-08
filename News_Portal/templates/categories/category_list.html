@@ -1,0 +1,33 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Category
+{% endblock title %}
+
+
+{% block content %}
+<div style="text-align: center">
+{% if category %}
+
+    <table>
+        {% load cache %}
+        {% cache 60 posts%}
+        <tr>
+            <!-- <th><h4> Категории <h4></th> -->
+			<h4> Категории <h4>
+        </tr>
+        {% for cats in category %}
+        <tr>
+            <td>{{ cats.name }}</td>
+			<td> <a href="{% url 'subscribe_to_category' cats.id %}">Подписаться</a></td>
+        </tr>
+        {% endfor %}
+        {% endcache %}
+    </table>
+
+{% else %}
+<h2> Категорий нет </h2>
+{% endif %}
+</div>
+{% endblock content %}
